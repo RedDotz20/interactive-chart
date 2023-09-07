@@ -13,6 +13,18 @@ import {
 	Legend,
 } from 'chart.js';
 
+import {
+	NumberInput,
+	NumberInputField,
+	NumberInputStepper,
+	NumberIncrementStepper,
+	NumberDecrementStepper,
+	Button,
+	Box,
+	Text,
+	HStack,
+} from '@chakra-ui/react';
+
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
@@ -26,7 +38,7 @@ ChartJS.register(
 export default function LineChart() {
 	const [data, setData] = useState<number[]>([]);
 	const [isRunning, setIsRunning] = useState(false);
-	const [multiplier, setMultiplier] = useState(1);
+	const [multiplier, setMultiplier] = useState(2);
 
 	useEffect(() => {
 		if (isRunning) {
@@ -49,8 +61,8 @@ export default function LineChart() {
 		setIsRunning(!isRunning);
 	};
 
-	const handleMultiplierChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setMultiplier(parseFloat(event.target.value));
+	const handleMultiplierChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setMultiplier(parseFloat(e.target.value));
 	};
 
 	const resetData = () => {
@@ -62,8 +74,9 @@ export default function LineChart() {
 		datasets: [
 			{
 				label: 'Data Points',
-				borderColor: 'white', // Set line color to white
+				borderColor: 'white',
 				backgroundColor: '#FF9C00',
+
 				fill: true,
 				tension: 0.2,
 				data: data,
@@ -72,28 +85,58 @@ export default function LineChart() {
 	};
 
 	return (
-		<div>
-			<Line data={chartData} />
-			<div className="flex gap-4 p-2">
-				<input
-					type="number"
-					placeholder="Multiplier"
-					value={multiplier}
-					onChange={handleMultiplierChange}
-				/>
-				<button
-					className="text-white"
+		<>
+			<Box
+				minWidth={700}
+				minHeight={400}
+			>
+				<Line data={chartData} />
+			</Box>
+			<Box
+				display="flex"
+				gap="4"
+				p="2"
+			>
+				<HStack
+					spacing={4}
+					color="white"
+				>
+					<Text>Multiplier</Text>
+					<NumberInput
+						minW="80px"
+						maxW="80px"
+						value={multiplier}
+						onChange={(value) => setMultiplier(parseFloat(value))}
+						color="white"
+						defaultValue={2}
+						min={1}
+						max={99}
+					>
+						<NumberInputField placeholder="Multiplier" />
+						<NumberInputStepper>
+							<NumberIncrementStepper color="white" />
+							<NumberDecrementStepper color="white" />
+						</NumberInputStepper>
+					</NumberInput>
+				</HStack>
+
+				<Button
+					variant="outline"
+					minWidth={100}
+					colorScheme={isRunning ? 'red' : 'green'}
 					onClick={toggleRunning}
 				>
 					{isRunning ? 'STOP' : 'START'}
-				</button>
-				<button
-					className="text-white"
+				</Button>
+				<Button
+					variant="outline"
+					minWidth={100}
+					colorScheme="orange"
 					onClick={resetData}
 				>
 					RESET
-				</button>
-			</div>
-		</div>
+				</Button>
+			</Box>
+		</>
 	);
 }
