@@ -1,10 +1,8 @@
-'use client';
-
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-import { CacheProvider } from '@chakra-ui/next-js';
-import { ChakraProvider } from '@chakra-ui/react';
 import './globals.css';
+
+import ChakraUIProvider from './components/ChakraUIProvider';
 
 const roboto = Roboto({
 	subsets: ['latin'],
@@ -22,9 +20,7 @@ export default function RootLayout({ children }: RootProps) {
 	return (
 		<html lang="en">
 			<body className={roboto.className}>
-				<CacheProvider>
-					<ChakraProvider>{children}</ChakraProvider>
-				</CacheProvider>
+				<ChakraUIProvider>{children}</ChakraUIProvider>
 			</body>
 		</html>
 	);
