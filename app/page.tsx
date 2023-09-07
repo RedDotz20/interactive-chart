@@ -1,4 +1,4 @@
-import InteractiveChart from './InteractiveChart';
+import InteractiveChart from './components/InteractiveChart';
 
 export default function Home() {
 	return (

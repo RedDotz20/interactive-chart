@@ -13,17 +13,10 @@ import {
 	Legend,
 } from 'chart.js';
 
-import {
-	NumberInput,
-	NumberInputField,
-	NumberInputStepper,
-	NumberIncrementStepper,
-	NumberDecrementStepper,
-	Button,
-	Box,
-	Text,
-	HStack,
-} from '@chakra-ui/react';
+import { Button, Box, Text, HStack } from '@chakra-ui/react';
+
+import MultiplierInput from './MultiplierInput';
+import ControlButton from './ControlButton';
 
 ChartJS.register(
 	CategoryScale,
@@ -59,10 +52,6 @@ export default function LineChart() {
 
 	const toggleRunning = () => {
 		setIsRunning(!isRunning);
-	};
-
-	const handleMultiplierChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setMultiplier(parseFloat(e.target.value));
 	};
 
 	const resetData = () => {
@@ -102,40 +91,27 @@ export default function LineChart() {
 					color="white"
 				>
 					<Text>Multiplier</Text>
-					<NumberInput
-						minW="80px"
-						maxW="80px"
+
+					<MultiplierInput
 						value={multiplier}
-						onChange={(value) => setMultiplier(parseFloat(value))}
-						color="white"
-						defaultValue={2}
+						onChange={setMultiplier}
 						min={1}
 						max={99}
-					>
-						<NumberInputField placeholder="Multiplier" />
-						<NumberInputStepper>
-							<NumberIncrementStepper color="white" />
-							<NumberDecrementStepper color="white" />
-						</NumberInputStepper>
-					</NumberInput>
+						placeholder="Multiplier"
+					/>
 				</HStack>
 
-				<Button
-					variant="outline"
-					minWidth={100}
-					colorScheme={isRunning ? 'red' : 'green'}
+				<ControlButton
+					label={isRunning ? 'STOP' : 'START'}
 					onClick={toggleRunning}
-				>
-					{isRunning ? 'STOP' : 'START'}
-				</Button>
-				<Button
-					variant="outline"
-					minWidth={100}
-					colorScheme="orange"
+					colorScheme={isRunning ? 'red' : 'green'}
+				/>
+
+				<ControlButton
+					label="RESET"
 					onClick={resetData}
-				>
-					RESET
-				</Button>
+					colorScheme="orange"
+				/>
 			</Box>
 		</>
 	);
