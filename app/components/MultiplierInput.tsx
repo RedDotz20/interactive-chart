@@ -13,6 +13,7 @@ interface CustomNumberInputProps {
 	min?: number;
 	max?: number;
 	placeholder?: string;
+	isRunning: boolean;
 }
 
 export default function CustomNumberInput({
@@ -21,9 +22,11 @@ export default function CustomNumberInput({
 	min = 1,
 	max = 99,
 	placeholder,
+	isRunning,
 }: CustomNumberInputProps) {
 	return (
 		<NumberInput
+			isDisabled={isRunning}
 			minW="80px"
 			maxW="80px"
 			value={value}

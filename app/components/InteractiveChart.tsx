@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
 	Chart as ChartJS,
@@ -93,6 +93,7 @@ export default function LineChart() {
 					<Text>Multiplier</Text>
 
 					<MultiplierInput
+						isRunning={isRunning}
 						value={multiplier}
 						onChange={setMultiplier}
 						min={1}
